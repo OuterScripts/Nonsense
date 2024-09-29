@@ -1,3 +1,4 @@
+--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.
 repeat task.wait() until game:IsLoaded()
 local GuiLibrary
 local baseDirectory = (shared.VapePrivate and "vapeprivate/" or "vape/")
@@ -298,7 +299,7 @@ local World = GuiLibrary.CreateWindow({
 	Icon = "vape/assets/WorldIcon.png",
 	IconSize = 16
 })
-local Custom = GuiLibrary.CreateWindow({
+local Outer = GuiLibrary.CreateWindow({
 	Name = "Custom",
 	Icon = "vape/assets/KeybindIcon.png",
 	IconSize = 16
@@ -365,8 +366,8 @@ GUI.CreateButton({
 GUI.CreateDivider("OuterWare")
 GUI.CreateButton({
 	Name = "Custom",
-	Function = function(callback) Custom.SetVisible(callback) end,
-	Icon = "vape/assets/KeybindIcon.png",
+	Function = function(callback) Outer.SetVisible(callback) end,
+	Icon = "vape/assets/SearchBarIcon.png",
 	IconSize = 16
 })
 
@@ -1910,12 +1911,13 @@ GUISettings.CreateButton2({
 			RenderWindow = 4,
 			UtilityWindow = 5,
 			WorldWindow = 6,
-			FriendsWindow = 7,
-			TargetsWindow = 8,
-			ProfilesWindow = 9,
-			["Text GUICustomWindow"] = 10,
-			TargetInfoCustomWindow = 11,
-			RadarCustomWindow = 12,
+			OuterWindow = 7
+			FriendsWindow = 8,
+			TargetsWindow = 9,
+			ProfilesWindow = 10,
+			["Text GUICustomWindow"] = 11,
+			TargetInfoCustomWindow = 12,
+			RadarCustomWindow = 13,
 		}
 		local storedpos = {}
 		local num = 6
@@ -1946,7 +1948,12 @@ GUISettings.CreateButton2({
 })
 GeneralSettings.CreateButton2({
 	Name = "UNINJECT",
-	Function = GuiLibrary.SelfDestruct
+	Function = function()
+		GuiLibrary.SelfDestruct()
+		if getgenv().oldsynz ~= "doesntexist" then
+			syn.toast_notification = getgenv().oldsynz
+		end
+	end 
 })
 
 local function loadVape()
