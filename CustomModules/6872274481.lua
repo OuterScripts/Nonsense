@@ -73,8 +73,8 @@ local isfile = isfile or function(file)
 	local suc, res = pcall(function() return readfile(file) end)
 	return suc and res ~= nil
 end
+-- Xylex's isnetworkowner fix
 local networkownerswitch = tick()
---ME WHEN THE MOBILE EXPLOITS ADD A DISFUNCTIONAL ISNETWORKOWNER (its for compatability I swear!!)
 local isnetworkowner = function(part)
 	local suc, res = pcall(function() return gethiddenproperty(part, "NetworkOwnershipRule") end)
 	if suc and res == Enum.NetworkOwnership.Manual then
@@ -83,6 +83,7 @@ local isnetworkowner = function(part)
 	end
 	return networkownerswitch <= tick()
 end
+--
 local getcustomasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
 local queueonteleport = syn and syn.queue_on_teleport or queue_on_teleport or function() end
 local synapsev3 = syn and syn.toast_notification and "V3" or ""
