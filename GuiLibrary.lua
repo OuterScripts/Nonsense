@@ -1,3 +1,4 @@
+if getgenv and not getgenv().shared then getgenv().shared = {} end
 if shared.VapeExecuted then
 	local VERSION = "4.10"..(shared.VapePrivate and " PRIVATE" or "").." "..readfile("vape/commithash.txt"):sub(1, 6)
 	local baseDirectory = (shared.VapePrivate and "vapeprivate/" or "vape/")
@@ -147,7 +148,7 @@ if shared.VapeExecuted then
 			local suc, res = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/OuterWare/"..readfile("vape/commithash.txt").."/"..scripturl, true) end)
 			assert(suc, res)
 			assert(res ~= "404: Not Found", res)
-			if scripturl:find(".lua") then res = "
+			if scripturl:find(".lua") then res = "--remove or ur cooked lol\n"..res end
 			writefile("vape/"..scripturl, res)
 		end
 		return readfile("vape/"..scripturl)
