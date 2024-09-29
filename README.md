@@ -1,2 +1,4 @@
-# Vape V4
-rewrite soon :tm:
+# OuterWare
+Contributors:
+**nnouter** [Discord: nnouterr]
+**luckii** [Discord: asdagagfdh]
