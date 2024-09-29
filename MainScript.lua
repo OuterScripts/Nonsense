@@ -148,7 +148,7 @@ local function vapeGithubRequest(scripturl)
 			displayErrorPopup("Failed to connect to github : vape/"..scripturl.." : "..res)
 			error(res)
 		end
-		if scripturl:find(".lua") then res = "\n"..res end
+		if scripturl:find(".lua") then res = "--remove this or ur getting reset\n"..res end
 		writefile("vape/"..scripturl, res)
 	end
 	return readfile("vape/"..scripturl)
