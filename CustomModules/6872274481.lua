@@ -163,7 +163,7 @@ end
 local function run(func)
 	local ab, ac = pcall(func)
 	if not ab then
-		warningNotification('Run (Error)', ab .. ' (a module didnt load.)', 60)
+		error('Run (Error) - ' .. ab .. ' (a module didnt load.)')
 	end 
 end
 
@@ -413,9 +413,6 @@ local function getSpeed()
 		if store.grapple > tick() then
 			speed = speed + 90
 		end
-		if store.scythe > tick() then
-			speed = speed + 25
-		end
 		if lplr.Character:GetAttribute("GrimReaperChannel") then
 			speed = speed + 20
 		end
@@ -427,7 +424,7 @@ local function getSpeed()
 		if store.zephyrOrb ~= 0 then
 			speed = speed + 12
 		end
-		if store.imsped ~= 0 then
+		if store.imsped ~= 0 and store.scythe > tick() then
 			speed = speed + store.imsped
 		end			
 	end
@@ -3291,9 +3288,6 @@ run(function()
 											animationdelay = tick() + (swordmeta.sword.respectAttackSpeedForEffects and swordmeta.sword.attackSpeed or (killaurasync.Enabled and 0.24 or 0.14))
 											if not killauraswing.Enabled then
 												bedwars.SwordController:playSwordEffect(swordmeta, false)
-											end
-											if swordmeta.displayName:find(" Scythe") then
-												bedwars.ScytheController:playLocalAnimation()
 											end
 										end
 									end
