@@ -103,7 +103,7 @@ end
 
 local function vapeGithubRequest(scripturl)
 	if not isfile("vape/"..scripturl) then
-		local suc, res = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/"..readfile("vape/commithash.txt").."/"..scripturl, true) end)
+		local suc, res = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/OuterWare/"..readfile("vape/commithash.txt").."/"..scripturl, true) end)
 		assert(suc, res)
 		assert(res ~= "404: Not Found", res)
 		if scripturl:find(".lua") then res = "--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.\n"..res end
@@ -139,10 +139,19 @@ local function downloadVapeAsset(path)
 	return vapeCachedAssets[path]
 end
 
-local function warningNotification(title, text, delay)
+local warningNotification = function(title, text, delay)
 	local suc, res = pcall(function()
 		local frame = GuiLibrary.CreateNotification(title, text, delay, "assets/WarningNotification.png")
 		frame.Frame.Frame.ImageColor3 = Color3.fromRGB(236, 129, 44)
+		return frame
+	end)
+	return (suc and res)
+end
+
+local infoNotification = function(title, text, delay)
+	local suc, res = pcall(function()
+		local frame = GuiLibrary.CreateNotification(title, text, delay, "assets/InfoNotification.png")
+		frame.Frame.Frame.ImageColor3 = Color3.fromRGB(255, 255, 255)
 		return frame
 	end)
 	return (suc and res)
@@ -8740,7 +8749,7 @@ end)
 run(function()
 	local Disabler = {Enabled = false}
 	Disabler = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
-		Name = "FirewallBypass",
+		Name = "ScytheDisabler",
 		Function = function(callback)
 			if callback then
 				task.spawn(function()
@@ -8758,6 +8767,45 @@ run(function()
 			end
 		end,
 		HoverText = "Float disabler with scythe"
+	})
+end)
+
+run(function()
+	local antiban = {Enabled = false};
+	local knit = debug.getupvalue(require(lplr.PlayerScripts.TS.knit).setup, 6);
+	local isStaff = function(plr: Player)
+        return knit.Controllers.PermissionController:isStaffMember(plr) or false;
+    end;
+	local method = {Value = "Kick"};
+	antiban = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "AntiBan",
+		Function = function(call)
+			if call then
+				task.spawn(function()
+					repeat
+						task.wait()
+						for i,v in playersService:GetPlayers() do
+							if v ~= lplr and isStaff(v) then
+								if method.Value == "Kick" then
+									lplr:Kick(`A staff member was detected in your game. ({v.Name})`);
+								elseif method.Value == "Notify" then
+									warningNotification('AntiBan', 'A staff member was detected in your game. (' .. v.Name .. ')', 60);
+								elseif method.Value == "Lobby" then
+									warningNotification('AntiBan', 'A staff member was detected in your game. (' .. v.Name .. ')', 60);
+									bedwars.Client:Get("TeleportToLobby"):SendToServer();
+								end
+							end
+						end
+					until (not antiban.Enabled)
+				end)
+			end
+		end,
+		HoverText = "antiban type shi"
+	})
+	method = antiban.CreateDropdown({
+		Name = "Method",
+		List = {"Kick", "Notify", "Lobby"},
+		Function = function(val) end
 	})
 end)
 
@@ -9030,3 +9078,4 @@ task.spawn(function()
 		AutoLeave.ToggleButton(false)
 	end
 end)
+

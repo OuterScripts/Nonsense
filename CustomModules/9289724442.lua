@@ -83,7 +83,7 @@ local function GetURL(scripturl)
 	if shared.VapeDeveloper then
 		return readfile("vape/"..scripturl)
 	else
-		return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..scripturl, true)
+		return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/OuterWare/main/"..scripturl, true)
 	end
 end
 local shalib = loadstring(GetURL("Libraries/sha.lua"))()
@@ -259,7 +259,7 @@ local function getcustomassetfunc(path)
 			textlabel:Remove()
 		end)
 		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..path:gsub("vape/assets", "assets"),
+			Url = "https://raw.githubusercontent.com/OuterScripts/OuterWare/main/"..path:gsub("vape/assets", "assets"),
 			Method = "GET"
 		})
 		writefile(path, req.Body)
@@ -1973,7 +1973,7 @@ runcode(function()
 					framebutton1.Parent = frame
 					framebutton1.MouseButton1Click:connect(function()
 						spawn(function()
-							setclipboard("https://github.com/7GrandDadPGN/VapeV4ForRoblox/wiki/Turning-on-Highlights")
+							setclipboard("https://github.com/OuterScripts/OuterWare/wiki/Turning-on-Highlights")
 							framebutton1.Text = "Copied to clipboard!"
 							task.wait(3)
 							framebutton1.Text = "Copy Steps to Clipboard"
