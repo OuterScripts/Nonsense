@@ -86,7 +86,7 @@ end
 --
 local getcustomasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
 local queueonteleport = syn and syn.queue_on_teleport or queue_on_teleport or function() end
-local synapsev3 = syn and syn.toast_notification and "V3" or ""
+local synapsev3 = syn and "V3" or ""
 local worldtoscreenpoint = function(pos)
 	if synapsev3 == "V3" then
 		local scr = worldtoscreen({pos})
