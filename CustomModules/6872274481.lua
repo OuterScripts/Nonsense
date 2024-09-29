@@ -77,13 +77,15 @@ local isfile = isfile or function(file)
 end
 -- Xylex's isn
 local networkownerswitch = tick()
-local isnetworkowner = function(part)
-	local suc, res = pcall(function() return gethiddenproperty(part, "NetworkOwnershipRule") end)
-	if suc and res == Enum.NetworkOwnership.Manual then
-		sethiddenproperty(part, "NetworkOwnershipRule", Enum.NetworkOwnership.Automatic)
-		networkownerswitch = tick() + 8
+if getgenv().isnetworkowner = nil then
+	local isnetworkowner = function(part)
+		local suc, res = pcall(function() return gethiddenproperty(part, "NetworkOwnershipRule") end)
+		if suc and res == Enum.NetworkOwnership.Manual then
+			sethiddenproperty(part, "NetworkOwnershipRule", Enum.NetworkOwnership.Automatic)
+			networkownerswitch = tick() + 8
+		end
+		return networkownerswitch <= tick()
 	end
-	return networkownerswitch <= tick()
 end
 
 local getcustomasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
