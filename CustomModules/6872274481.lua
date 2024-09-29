@@ -1,4 +1,3 @@
---This watermark is used to delete the file if its cached, remove it to make the file persist after commits.
 local GuiLibrary = shared.GuiLibrary
 local playersService = game:GetService("Players")
 local textService = game:GetService("TextService")
@@ -8779,7 +8778,7 @@ run(function()
         return knit.Controllers.PermissionController:isStaffMember(plr) or false;
     end;
 	local method = {Value = "Kick"};
-	antiban = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+	antiban = GuiLibrary.ObjectsThatCanBeSaved.CustomWindow.Api.CreateOptionsButton({
 		Name = "AntiBan",
 		Function = function(call)
 			if call then

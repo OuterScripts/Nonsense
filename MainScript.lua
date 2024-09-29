@@ -299,7 +299,7 @@ local World = GuiLibrary.CreateWindow({
 	Icon = "vape/assets/WorldIcon.png",
 	IconSize = 16
 })
-local Outer = GuiLibrary.CreateWindow({
+local Custom = GuiLibrary.CreateWindow({
 	Name = "Custom",
 	Icon = "vape/assets/KeybindIcon.png",
 	IconSize = 16
@@ -366,8 +366,8 @@ GUI.CreateButton({
 GUI.CreateDivider("OuterWare")
 GUI.CreateButton({
 	Name = "Custom",
-	Function = function(callback) Outer.SetVisible(callback) end,
-	Icon = "vape/assets/SearchBarIcon.png",
+	Function = function(callback) Custom.SetVisible(callback) end,
+	Icon = "vape/assets/KeybindIcon.png",
 	IconSize = 16
 })
 
@@ -1881,7 +1881,7 @@ GeneralSettings.CreateButton2({
 		if delfile then
 			delfile(baseDirectory.."Profiles/"..(GuiLibrary.CurrentProfile ~= "default" and GuiLibrary.CurrentProfile or "")..(shared.CustomSaveVape or game.PlaceId)..".vapeprofile.txt")
 		else
-			writefile(baseDirectory.."Profiles/"..(GuiLibrary.CurrentProfile ~= "default" and GuiLibrary.CurrentProfile or "")..(shared.CustomSaveVape or game.PlaceId)..".vapeprofile.txt", "")
+			writefile(baseDirectory.."Profiles/"..(GuiLibrary and GuiLibrary.CurrentProfile or "")..(shared.CustomSaveVape or game.PlaceId)..".vapeprofile.txt", "")
 		end
 		shared.VapeSwitchServers = true
 		shared.VapeOpenGui = true
@@ -1889,6 +1889,7 @@ GeneralSettings.CreateButton2({
 		loadstring(vapeGithubRequest("NewMainScript.lua"))()
 	end
 })
+
 GUISettings.CreateButton2({
 	Name = "RESET GUI POSITIONS",
 	Function = function()
@@ -1910,8 +1911,8 @@ GUISettings.CreateButton2({
 			BlatantWindow = 3,
 			RenderWindow = 4,
 			UtilityWindow = 5,
-			WorldWindow = 6,
-			OuterWindow = 7
+			OuterWindow = 6,
+			WorldWindow = 7,
 			FriendsWindow = 8,
 			TargetsWindow = 9,
 			ProfilesWindow = 10,
@@ -1948,12 +1949,7 @@ GUISettings.CreateButton2({
 })
 GeneralSettings.CreateButton2({
 	Name = "UNINJECT",
-	Function = function()
-		GuiLibrary.SelfDestruct()
-		if getgenv().oldsynz ~= "doesntexist" then
-			syn.toast_notification = getgenv().oldsynz
-		end
-	end 
+	Function = GuiLibrary.SelfDestruct
 })
 
 local function loadVape()
