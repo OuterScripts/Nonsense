@@ -10,6 +10,7 @@ local collectionService = game:GetService("CollectionService")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local gameCamera = workspace.CurrentCamera
 local lplr = playersService.LocalPlayer
+local xdg = tick()
 local vapeConnections = {}
 local vapeCachedAssets = {}
 local vapeEvents = setmetatable({}, {
@@ -24,6 +25,7 @@ local vapeInjected = true
 local bedwars = {}
 local store = {
 	attackReach = 0,
+	imsped = 0,
 	attackReachUpdate = tick(),
 	blocks = {},
 	blockPlacer = {},
@@ -158,7 +160,12 @@ local infoNotification = function(title, text, delay)
 	return (suc and res)
 end
 
-local function run(func) func() end
+local function run(func)
+	local ab, ac = pcall(func)
+	if not ab then
+		warningNotification('Run (Error)', ab .. ' (a module didnt load.)', 60)
+	end 
+end
 
 local function isFriend(plr, recolor)
 	if GuiLibrary.ObjectsThatCanBeSaved["Use FriendsToggle"].Api.Enabled then
@@ -407,7 +414,7 @@ local function getSpeed()
 			speed = speed + 90
 		end
 		if store.scythe > tick() then
-			speed = speed + 5
+			speed = speed + 25
 		end
 		if lplr.Character:GetAttribute("GrimReaperChannel") then
 			speed = speed + 20
@@ -420,6 +427,9 @@ local function getSpeed()
 		if store.zephyrOrb ~= 0 then
 			speed = speed + 12
 		end
+		if store.imsped > 0 then
+			speed = speed + store.imsped
+		end			
 	end
 	return speed
 end
@@ -6549,6 +6559,7 @@ run(function()
 	local AutoBuySharp = {Enabled = false}
 	local AutoBuyDestruction = {Enabled = false}
 	local AutoBuyDiamond = {Enabled = false}
+	local AutoBuyItemm = {Value = "Scythe"}
 	local AutoBuyAlarm = {Enabled = false}
 	local AutoBuyGui = {Enabled = false}
 	local AutoBuyTierSkip = {Enabled = true}
@@ -6574,6 +6585,14 @@ run(function()
 		[3] = "iron_sword",
 		[4] = "diamond_sword",
 		[5] = "emerald_sword"
+	}
+
+	local scythes = {
+		[1] = "wood_scythe",
+		[2] = "stone_scythe",
+		[3] = "iron_scythe",
+		[4] = "diamond_scythe",
+		[5] = "mythic_scythe"
 	}
 
 	local axes = {
@@ -6714,16 +6733,25 @@ run(function()
 		end,
 		Sword = function(inv, upgrades, shoptype)
 			if AutoBuySword.Enabled == false or shoptype ~= "item" then return end
-			local currentsword = getItemNear("sword", inv.items)
+			local currentsword = AutoBuyItemm.Value == "Scythe" and getItemNear("scythe", inv.items) or getItemNear("sword", inv.items)
 			local swordindex = (currentsword and table.find(swords, currentsword.itemType) or 0) + 1
-			if currentsword ~= nil and table.find(swords, currentsword.itemType) == nil then return end
+			if AutoBuyItemm.Value == "Scythe" then
+				swordindex = (currentsword and table.find(scythes, currentsword.itemType) or 0) + 1
+			end
+			if getItemNear("scythe", inv.items) then 
+				if currentsword ~= nil and table.find(scythes, currentsword.itemType) == nil then return end
+			else
+				if currentsword ~= nil and table.find(swords, currentsword.itemType) == nil then return end
+			end
 			local highestbuyable = nil
-			for i = swordindex, #swords, 1 do
-				local shopitem = getShopItem(swords[i])
+			local tableToDo = AutoBuyItemm.Value == "Scythe" and scythes or swords
+			for i = swordindex, #tableToDo, 1 do
+				local shopitem = AutoBuyItemm.Value == "Scythe" and getShopItem(scythes[i]) or getShopItem(swords[i])
 				if shopitem and i == swordindex then
 					local currency = getItem(shopitem.currency, inv.items)
 					if currency and currency.amount >= shopitem.price and (shopitem.category ~= "Armory" or upgrades.armory) then
 						highestbuyable = shopitem
+						if getItemNear("sword", inv.items) and AutoBuyItemm.Value == "Scythe" then shopitem = getShopItem("wood_scythe") end
 						bedwars.ClientStoreHandler:dispatch({
 							type = "BedwarsAddItemPurchased",
 							itemType = shopitem.itemType
@@ -6800,6 +6828,11 @@ run(function()
 			end
 		end,
 		HoverText = "Automatically Buys Swords, Armor, and Team Upgrades\nwhen you walk near the NPC"
+	})
+	AutoBuyItemm = AutoBuy.CreateDropdown({
+		Name = "Item",
+		List = {"Scythe", "Sword"},
+		Function = function(val) end
 	})
 	AutoBuyRange = AutoBuy.CreateSlider({
 		Name = "Range",
@@ -8748,26 +8781,70 @@ run(function()
 end)
 
 run(function()
-	local Disabler = {Enabled = false}
+	local Disabler = {Enabled = false} --// qwertyui let me use this :pray:
+	local speeeed = {Value = 12}
+	local bticks = 0
+	local direction
 	Disabler = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
 		Name = "ScytheDisabler",
 		Function = function(callback)
 			if callback then
 				task.spawn(function()
-					repeat
-						task.wait()
+					RunLoops:BindToStepped('scythess', function()
 						local item = getItemNear("scythe")
-						if item and lplr.Character.HandInvItem.Value == item.tool and bedwars.CombatController then
-							bedwars.Client:Get("ScytheDash"):SendToServer({direction = Vector3.new(9e9, 9e9, 9e9)})
-							if entityLibrary.isAlive and entityLibrary.character.Head.Transparency ~= 0 then
-								store.scythe = tick() + 1
+						if item then
+							switchItem(item.tool)
+						end
+						if item then
+							bticks += 1
+							if entityLibrary.isAlive then
+								if bticks >= 75 then
+									sethiddenproperty(entityLibrary.character.HumanoidRootPart, "NetworkIsSleeping", false)
+									bticks = 0
+								else
+									sethiddenproperty(entityLibrary.character.HumanoidRootPart, "NetworkIsSleeping", true)
+								end
+							end
+							if bm.Value == "LookVector" then
+                                direction = entityLibrary.character.HumanoidRootPart.CFrame.LookVector
+                            elseif bm.Value == "MoveDirection" then
+                                direction = entityLibrary.character.Humanoid.MoveDirection
+							elseif bm.Value == "Both" then
+                                direction = entityLibrary.character.HumanoidRootPart.CFrame.LookVector and entityLibrary.character.Humanoid.MoveDirection / 1
+							end
+							bedwars.Client:Get("ScytheDash"):SendToServer({direction = direction / 0.01 * 0.01})
+							if entityLibrary.isAlive then
+								if entityLibrary.character.Head.Transparency ~= 0 then
+									store.scythe = tick() + 1
+								end
+							else
+								store.scythe = 0
+							end
+							if not isnetworkowner(entityLibrary.character.HumanoidRootPart) then
+								store.scythe = 0
 							end
 						end
-					until (not Disabler.Enabled)
+					end)
 				end)
+			else
+				RunLoops:UnbindFromStepped('scythess')
 			end
 		end,
 		HoverText = "Float disabler with scythe"
+	})
+	bm = Disabler.CreateDropdown({
+        Name = "Method",
+        List = {"LookVector", "MoveDirection", "Both"},
+        Function = function() end
+    })
+	speeeed = Disabler.CreateSlider({
+		Name = "Speed",
+		Min = 0,
+		Max = 50,
+		Default = 12,
+		Function = function(val) 
+			store.imsped = val
+		end
 	})
 end)
 
@@ -9080,3 +9157,4 @@ task.spawn(function()
 	end
 end)
 
+infoNotification('OuterWare', 'Loaded in ' .. math.round(tick() - xdg) .. 's.', 5)
