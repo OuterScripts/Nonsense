@@ -625,7 +625,7 @@ if shared.VapeExecuted then
 						if v["Expanded"] then
 							obj["Api"]["ExpandToggle"]()
 						end
-					endf
+					end
 					if v.Type == "CustomWindow" then
 						obj.Object.Position = UDim2.new(v["Position"][1], v["Position"][2], v["Position"][3], v["Position"][4])
 						obj.Object.Visible = v["Visible"]

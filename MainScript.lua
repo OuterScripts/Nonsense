@@ -1,6 +1,5 @@
 repeat task.wait() until game:IsLoaded()
-local GuiLibrary = loadfile("vape/GuiLibrary.lua")()
-shared.GuiLibrary = GuiLibrary
+local GuiLibrary
 local baseDirectory = (shared.VapePrivate and "vapeprivate/" or "vape/")
 local vapeInjected = true
 local oldRainbow = false
@@ -238,6 +237,9 @@ if not isfile("vape/CustomModules/cachechecked.txt") then
 	end
 	writefile("vape/CustomModules/cachechecked.txt", "verified")
 end
+
+GuiLibrary = loadstring(vapeGithubRequest("GuiLibrary.lua"))()
+shared.GuiLibrary = GuiLibrary
 
 local saveSettingsLoop = coroutine.create(function()
 	if inputService.TouchEnabled then return end
