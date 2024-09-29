@@ -1,4 +1,3 @@
---This watermark is used to delete the file if its cached, remove it to make the file persist after commits.
 repeat task.wait() until game:IsLoaded()
 local GuiLibrary
 local baseDirectory = (shared.VapePrivate and "vapeprivate/" or "vape/")
@@ -301,7 +300,7 @@ local World = GuiLibrary.CreateWindow({
 })
 local Custom = GuiLibrary.CreateWindow({
 	Name = "Custom",
-	Icon = "vape/assets/KeybindIcon.png",
+	Icon = "vape/assets/SearchBarIcon.png",
 	IconSize = 16
 })
 local Friends = GuiLibrary.CreateWindow2({

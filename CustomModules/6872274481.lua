@@ -19,7 +19,7 @@ local vapeEvents = setmetatable({}, {
 		return self[index]
 	end
 })
-local vapeTargetInfo = shared.VapeTargetInfo
+local vapeTargetInfo = shared.VapeTargetInfo -- send me zip file so i can add to my workspace
 local vapeInjected = true
 
 local bedwars = {}
@@ -427,7 +427,7 @@ local function getSpeed()
 		if store.zephyrOrb ~= 0 then
 			speed = speed + 12
 		end
-		if store.imsped > 0 then
+		if store.imsped ~= 0 then
 			speed = speed + store.imsped
 		end			
 	end
