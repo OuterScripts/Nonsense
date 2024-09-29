@@ -4,3 +4,4 @@ Contributors:
 
 **nnouter** [Discord: nnouterr]
 **asdadagagfdh** [Discord: asdagagfdh]
+**xzxkw**: [Discord: desxir.]

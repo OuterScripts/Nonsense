@@ -148,7 +148,7 @@ local function vapeGithubRequest(scripturl)
 			displayErrorPopup("Failed to connect to github : vape/"..scripturl.." : "..res)
 			error(res)
 		end
-		if scripturl:find(".lua") then res = "--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.\n"..res end
+		if scripturl:find(".lua") then res = "\n"..res end
 		writefile("vape/"..scripturl, res)
 	end
 	return readfile("vape/"..scripturl)
@@ -205,13 +205,13 @@ end)
 if not isfile("vape/CustomModules/cachechecked.txt") then
 	local isNotCached = false
 	for i,v in pairs({"vape/Universal.lua", "vape/MainScript.lua", "vape/GuiLibrary.lua"}) do
-		if isfile(v) and not readfile(v):find("--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.") then
+		if isfile(v) and not readfile(v):find("") then
 			isNotCached = true
 		end
 	end
 	if isfolder("vape/CustomModules") then
 		for i,v in pairs(listfiles("vape/CustomModules")) do
-			if isfile(v) and not readfile(v):find("--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.") then
+			if isfile(v) and not readfile(v):find("") then
 				isNotCached = true
 			end
 		end
@@ -219,17 +219,17 @@ if not isfile("vape/CustomModules/cachechecked.txt") then
 	if isNotCached and not shared.VapeDeveloper then
 		displayErrorPopup("Vape has detected uncached files, If you have CustomModules click no, else click yes.", {No = function() end, Yes = function()
 			for i,v in pairs({"vape/Universal.lua", "vape/MainScript.lua", "vape/GuiLibrary.lua"}) do
-				if isfile(v) and not readfile(v):find("--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.") then
+				if isfile(v) and not readfile(v):find("") then
 					delfile(v)
 				end
 			end
 			for i,v in pairs(listfiles("vape/CustomModules")) do
-				if isfile(v) and not readfile(v):find("--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.") then
+				if isfile(v) and not readfile(v):find("") then
 					local last = v:split('\\')
 					last = last[#last]
 					local suc, publicrepo = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/OuterWare/"..readfile("vape/commithash.txt").."/CustomModules/"..last) end)
 					if suc and publicrepo and publicrepo ~= "404: Not Found" then
-						writefile("vape/CustomModules/"..last, "--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.\n"..publicrepo)
+						writefile("vape/CustomModules/"..last, "\n"..publicrepo)
 					end
 				end
 			end
@@ -1960,7 +1960,7 @@ local function loadVape()
 			if not shared.VapeDeveloper then
 				local suc, publicrepo = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/OuterWare/"..readfile("vape/commithash.txt").."/CustomModules/"..game.PlaceId..".lua") end)
 				if suc and publicrepo and publicrepo ~= "404: Not Found" then
-					writefile("vape/CustomModules/"..game.PlaceId..".lua", "--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.\n"..publicrepo)
+					writefile("vape/CustomModules/"..game.PlaceId..".lua", "\n"..publicrepo)
 					loadstring(readfile("vape/CustomModules/"..game.PlaceId..".lua"))()
 				end
 			end

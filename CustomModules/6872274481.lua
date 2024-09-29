@@ -19,7 +19,7 @@ local vapeEvents = setmetatable({}, {
 		return self[index]
 	end
 })
-local vapeTargetInfo = shared.VapeTargetInfo -- send me zip file so i can add to my workspace
+local vapeTargetInfo = shared.VapeTargetInfo 
 local vapeInjected = true
 
 local bedwars = {}
@@ -75,7 +75,7 @@ local isfile = isfile or function(file)
 	local suc, res = pcall(function() return readfile(file) end)
 	return suc and res ~= nil
 end
--- Xylex's isnetworkowner fix
+-- Xylex's isn
 local networkownerswitch = tick()
 local isnetworkowner = function(part)
 	local suc, res = pcall(function() return gethiddenproperty(part, "NetworkOwnershipRule") end)
@@ -85,7 +85,7 @@ local isnetworkowner = function(part)
 	end
 	return networkownerswitch <= tick()
 end
---
+
 local getcustomasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
 local queueonteleport = syn and syn.queue_on_teleport or queue_on_teleport or function() end
 local synapsev3 = syn and "V3" or ""
@@ -109,7 +109,7 @@ local function vapeGithubRequest(scripturl)
 		local suc, res = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/OuterWare/"..readfile("vape/commithash.txt").."/"..scripturl, true) end)
 		assert(suc, res)
 		assert(res ~= "404: Not Found", res)
-		if scripturl:find(".lua") then res = "--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.\n"..res end
+		if scripturl:find(".lua") then res = "--remove this or ur getting reset\n"..res end
 		writefile("vape/"..scripturl, res)
 	end
 	return readfile("vape/"..scripturl)
