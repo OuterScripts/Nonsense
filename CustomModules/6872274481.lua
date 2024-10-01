@@ -1,26 +1,39 @@
-local GuiLibrary = shared.GuiLibrary
-local playersService = game:GetService("Players")
-local textService = game:GetService("TextService")
-local lightingService = game:GetService("Lighting")
-local textChatService = game:GetService("TextChatService")
-local inputService = game:GetService("UserInputService")
-local runService = game:GetService("RunService")
-local tweenService = game:GetService("TweenService")
-local collectionService = game:GetService("CollectionService")
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local gameCamera = workspace.CurrentCamera
-local lplr = playersService.LocalPlayer
-local xdg = tick()
-local vapeConnections = {}
-local vapeCachedAssets = {}
+local xdg = tick();
+
+local outerware = {
+	create = {
+		combat = GuiLibrary.ObjectsThatCanBeSaved.CombatWindow.Api.CreateOptionsButton
+		blatant = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton
+		render = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton
+		utility = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton
+		world = GuiLibrary.ObjectsThatCanBeSaved.WorldWindow.Api.CreateOptionsButton
+		custom = GuiLibrary.ObjectsThatCanBeSaved.CustomWindow.Api.CreateOptionsButton
+	}
+	objs = GuiLibrary.ObjectsThatCanBeSaved
+}
+local GuiLibrary = shared.GuiLibrary;
+local cloneref = cloneref or function(x) return x end;
+local playersService = cloneref(game:GetService("Players"));
+local textService = cloneref(game:GetService("TextService"));
+local lightingService = cloneref(game:GetService("Lighting"));
+local textChatService = cloneref(game:GetService("TextChatService"));
+local inputService = cloneref(game:GetService("UserInputService"));
+local runService = cloneref(game:GetService("RunService"));
+local tweenService = cloneref(game:GetService("TweenService"));
+local collectionService = cloneref(game:GetService("CollectionService"));
+local replicatedStorage = cloneref(game:GetService("ReplicatedStorage"));
+local gameCamera = workspace.CurrentCamera;
+local lplr = playersService.LocalPlayer;
+local vapeConnections: table = {};
+local vapeCachedAssets: table = {};
 local vapeEvents = setmetatable({}, {
 	__index = function(self, index)
-		self[index] = Instance.new("BindableEvent")
-		return self[index]
+		self[index] = Instance.new("BindableEvent");
+		return self[index];
 	end
 })
-local vapeTargetInfo = shared.VapeTargetInfo 
-local vapeInjected = true
+local vapeTargetInfo = shared.VapeTargetInfo;
+local vapeInjected = true;
 
 local bedwars = {}
 local store = {
@@ -65,8 +78,8 @@ local store = {
 	},
 	zephyrOrb = 0
 }
-store.blockRaycast.FilterType = Enum.RaycastFilterType.Include
-local AutoLeave = {Enabled = false}
+store.blockRaycast.FilterType = Enum.RaycastFilterType.Include;
+local AutoLeave = {Enabled = false};
 
 table.insert(vapeConnections, workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(function()
 	gameCamera = workspace.CurrentCamera or workspace:FindFirstChildWhichIsA("Camera")
