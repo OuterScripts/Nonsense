@@ -1,6 +1,7 @@
 local xdg = tick();
 
-local outerware = {
+local GuiLibrary = shared.GuiLibrary
+shared.outerware = {
 	create = {
 		combat = GuiLibrary.ObjectsThatCanBeSaved.CombatWindow.Api.CreateOptionsButton
 		blatant = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton
@@ -11,7 +12,6 @@ local outerware = {
 	}
 	objs = GuiLibrary.ObjectsThatCanBeSaved
 }
-local GuiLibrary = shared.GuiLibrary;
 local cloneref = cloneref or function(x) return x end;
 local playersService = cloneref(game:GetService("Players"));
 local textService = cloneref(game:GetService("TextService"));
