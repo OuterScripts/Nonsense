@@ -1,8 +1,5 @@
 if getgenv and not getgenv().shared then getgenv().shared = {} end
-if getgenv and ({identifyexecutor()})[1] == 'Synapse Z' and not getgenv().oldsynn then
-	syn.toast_notification = nil 
-end
-shared.VapeDeveloper = true
+if ({identifyexecutor()})[1] == 'Synapse Z' then syn.toast_notification = nil end
 local errorPopupShown = false
 local setidentity = syn and syn.set_thread_identity or set_thread_identity or setidentity or setthreadidentity or function() end
 local getidentity = syn and syn.get_thread_identity or get_thread_identity or getidentity or getthreadidentity or function() return 8 end
@@ -51,7 +48,7 @@ local function vapeGithubRequest(scripturl)
 			displayErrorPopup("Failed to connect to github : vape/"..scripturl.." : "..res)
 			error(res)
 		end
-		if scripturl:find(".lua") then res = "--remove this or ur getting reset\n"..res end
+		if scripturl:find(".lua") then res = "--remove this or ur getting reset every update by autoupdate\n"..res end
 		writefile("vape/"..scripturl, res)
 	end
 	return readfile("vape/"..scripturl)
