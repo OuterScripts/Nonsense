@@ -1,6 +1,6 @@
 if getgenv and not getgenv().shared then getgenv().shared = {} end
 if getgenv and ({identifyexecutor()})[1] == 'Synapse Z' and syn and syn.toast_notification then
-	syn.toast_notification: undefined = nil;
+	syn.toast_notification = nil;
 end -- // syn z fix
 
 local errorPopupShown = false
