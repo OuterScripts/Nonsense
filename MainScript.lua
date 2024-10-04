@@ -205,13 +205,13 @@ end)
 if not isfile("vape/CustomModules/cachechecked.txt") then
 	local isNotCached = false
 	for i,v in pairs({"vape/Universal.lua", "vape/MainScript.lua", "vape/GuiLibrary.lua"}) do
-		if isfile(v) and not readfile(v):find("") then
+		if isfile(v) and not readfile(v):find("--im gay") then
 			isNotCached = true
 		end
 	end
 	if isfolder("vape/CustomModules") then
 		for i,v in pairs(listfiles("vape/CustomModules")) do
-			if isfile(v) and not readfile(v):find("") then
+			if isfile(v) and not readfile(v):find("--im gay") then
 				isNotCached = true
 			end
 		end
@@ -219,12 +219,12 @@ if not isfile("vape/CustomModules/cachechecked.txt") then
 	if isNotCached and not shared.VapeDeveloper then
 		displayErrorPopup("Vape has detected uncached files, If you have CustomModules click no, else click yes.", {No = function() end, Yes = function()
 			for i,v in pairs({"vape/Universal.lua", "vape/MainScript.lua", "vape/GuiLibrary.lua"}) do
-				if isfile(v) and not readfile(v):find("") then
+				if isfile(v) and not readfile(v):find("--im gay") then
 					delfile(v)
 				end
 			end
 			for i,v in pairs(listfiles("vape/CustomModules")) do
-				if isfile(v) and not readfile(v):find("") then
+				if isfile(v) and not readfile(v):find("--im gay") then
 					local last = v:split('\\')
 					last = last[#last]
 					local suc, publicrepo = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/OuterWare/"..readfile("vape/commithash.txt").."/CustomModules/"..last) end)

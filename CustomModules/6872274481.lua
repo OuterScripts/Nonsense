@@ -1,26 +1,28 @@
-local GuiLibrary = shared.GuiLibrary
-local playersService = game:GetService("Players")
-local textService = game:GetService("TextService")
-local lightingService = game:GetService("Lighting")
-local textChatService = game:GetService("TextChatService")
-local inputService = game:GetService("UserInputService")
-local runService = game:GetService("RunService")
-local tweenService = game:GetService("TweenService")
-local collectionService = game:GetService("CollectionService")
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local gameCamera = workspace.CurrentCamera
-local lplr = playersService.LocalPlayer
-local xdg = tick()
-local vapeConnections = {}
-local vapeCachedAssets = {}
+local xdg = tick();
+local outerware = shared.outerware;
+local GuiLibrary = outerware.lib;
+local cloneref = cloneref or function(x) return x end;
+local playersService = cloneref(game:GetService("Players"));
+local textService = cloneref(game:GetService("TextService"));
+local lightingService = cloneref(game:GetService("Lighting"));
+local textChatService = cloneref(game:GetService("TextChatService"));
+local inputService = cloneref(game:GetService("UserInputService"));
+local runService = cloneref(game:GetService("RunService"));
+local tweenService = cloneref(game:GetService("TweenService"));
+local collectionService = cloneref(game:GetService("CollectionService"));
+local replicatedStorage = cloneref(game:GetService("ReplicatedStorage"));
+local gameCamera = workspace.CurrentCamera;
+local lplr = playersService.LocalPlayer;
+local vapeConnections = {};
+local vapeCachedAssets = {};
 local vapeEvents = setmetatable({}, {
 	__index = function(self, index)
-		self[index] = Instance.new("BindableEvent")
-		return self[index]
+		self[index] = Instance.new("BindableEvent");
+		return self[index];
 	end
 })
-local vapeTargetInfo = shared.VapeTargetInfo 
-local vapeInjected = true
+local vapeTargetInfo = shared.VapeTargetInfo;
+local vapeInjected = true;
 
 local bedwars = {}
 local store = {
@@ -65,8 +67,8 @@ local store = {
 	},
 	zephyrOrb = 0
 }
-store.blockRaycast.FilterType = Enum.RaycastFilterType.Include
-local AutoLeave = {Enabled = false}
+store.blockRaycast.FilterType = Enum.RaycastFilterType.Include;
+local AutoLeave = {Enabled = false};
 
 table.insert(vapeConnections, workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(function()
 	gameCamera = workspace.CurrentCamera or workspace:FindFirstChildWhichIsA("Camera")
@@ -77,13 +79,15 @@ local isfile = isfile or function(file)
 end
 -- Xylex's isn
 local networkownerswitch = tick()
-local isnetworkowner = function(part)
-	local suc, res = pcall(function() return gethiddenproperty(part, "NetworkOwnershipRule") end)
-	if suc and res == Enum.NetworkOwnership.Manual then
-		sethiddenproperty(part, "NetworkOwnershipRule", Enum.NetworkOwnership.Automatic)
-		networkownerswitch = tick() + 8
+if getgenv().isnetworkowner = nil then
+	local isnetworkowner = function(part)
+		local suc, res = pcall(function() return gethiddenproperty(part, "NetworkOwnershipRule") end)
+		if suc and res == Enum.NetworkOwnership.Manual then
+			sethiddenproperty(part, "NetworkOwnershipRule", Enum.NetworkOwnership.Automatic)
+			networkownerswitch = tick() + 8
+		end
+		return networkownerswitch <= tick()
 	end
-	return networkownerswitch <= tick()
 end
 
 local getcustomasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
@@ -9149,6 +9153,36 @@ task.spawn(function()
 	if not AutoLeave.Enabled then
 		AutoLeave.ToggleButton(false)
 	end
+end)
+
+run(function()
+	local DeathSound = {Enabled = false}
+
+
+	
+	table.insert(AutoLeave.Connections, vapeEvents.EntityDeathEvent.Event:Connect(function(deathTable)
+		if (not leaveAttempted) and deathTable.finalKill and deathTable.entityInstance == lplr.Character then
+			leaveAttempted = true
+			if isEveryoneDead() and store.matchState ~= 2 then
+				task.wait(1 + (AutoLeaveDelay.Value / 10))
+				if bedwars.ClientStoreHandler:getState().Game.customMatch == nil and bedwars.ClientStoreHandler:getState().Party.leader.userId == lplr.UserId then
+					if not AutoPlayAgain.Enabled then
+						bedwars.Client:Get("TeleportToLobby"):SendToServer()
+					else
+						if AutoLeaveRandom.Enabled then
+							local listofmodes = {}
+							for i,v in pairs(bedwars.QueueMeta) do
+								if not v.disabled and not v.voiceChatOnly and not v.rankCategory then table.insert(listofmodes, i) end
+							end
+							bedwars.QueueController:joinQueue(listofmodes[math.random(1, #listofmodes)])
+						else
+							bedwars.QueueController:joinQueue(store.queueType)
+						end
+					end
+				end
+			end
+		end
+	end))
 end)
 
 infoNotification('OuterWare', 'Loaded in ' .. math.round(tick() - xdg) .. 's.', 5)

@@ -1,5 +1,5 @@
 if getgenv and not getgenv().shared then getgenv().shared = {} end
-if ({identifyexecutor()})[1] == 'Synapse Z' then syn.toast_notification = nil end
+if ({identifyexecutor()})[1] == 'Synapse Z' and syn and syn.toast_notification ~= nil then syn.toast_notification = nil end
 local errorPopupShown = false
 local setidentity = syn and syn.set_thread_identity or set_thread_identity or setidentity or setthreadidentity or function() end
 local getidentity = syn and syn.get_thread_identity or get_thread_identity or getidentity or getthreadidentity or function() return 8 end
@@ -67,20 +67,20 @@ if not shared.VapeDeveloper then
 		if isfolder("vape") then 
 			if ((not isfile("vape/commithash.txt")) or (readfile("vape/commithash.txt") ~= commit or commit == "main")) then
 				for i,v in pairs({"vape/Universal.lua", "vape/MainScript.lua", "vape/GuiLibrary.lua"}) do 
-					if isfile(v) and readfile(v):find("") then
+					if isfile(v) and readfile(v):find("--nigga") then
 						delfile(v)
 					end 
 				end
 				if isfolder("vape/CustomModules") then 
 					for i,v in pairs(listfiles("vape/CustomModules")) do 
-						if isfile(v) and readfile(v):find("") then
+						if isfile(v) and readfile(v):find("--nigga") then
 							delfile(v)
 						end 
 					end
 				end
 				if isfolder("vape/Libraries") then 
 					for i,v in pairs(listfiles("vape/Libraries")) do 
-						if isfile(v) and readfile(v):find("") then
+						if isfile(v) and readfile(v):find("--nigga") then
 							delfile(v)
 						end 
 					end
