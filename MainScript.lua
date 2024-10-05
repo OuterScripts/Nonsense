@@ -439,6 +439,18 @@ Friends.CreateColorSlider({
 		end
 	end
 })
+shared.outerware = {
+	create = {
+		combat = GuiLibrary.ObjectsThatCanBeSaved.CombatWindow.Api.CreateOptionsButton,
+		blatant = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton,
+		render = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton,
+		utility = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton,
+		world = GuiLibrary.ObjectsThatCanBeSaved.WorldWindow.Api.CreateOptionsButton,
+		custom = GuiLibrary.ObjectsThatCanBeSaved.CustomWindow.Api.CreateOptionsButton
+	},
+	objs = GuiLibrary.ObjectsThatCanBeSaved,
+	lib = GuiLibrary
+}
 local ProfilesTextList = {RefreshValues = function() end}
 ProfilesTextList = Profiles.CreateTextList({
 	Name = "ProfilesList",

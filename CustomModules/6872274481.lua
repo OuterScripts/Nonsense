@@ -1,16 +1,15 @@
 local xdg = tick();
 local outerware = shared.outerware;
 local GuiLibrary = outerware.lib;
-local cloneref = cloneref or function(x) return x end;
-local playersService = cloneref(game:GetService("Players"));
-local textService = cloneref(game:GetService("TextService"));
-local lightingService = cloneref(game:GetService("Lighting"));
-local textChatService = cloneref(game:GetService("TextChatService"));
-local inputService = cloneref(game:GetService("UserInputService"));
-local runService = cloneref(game:GetService("RunService"));
-local tweenService = cloneref(game:GetService("TweenService"));
-local collectionService = cloneref(game:GetService("CollectionService"));
-local replicatedStorage = cloneref(game:GetService("ReplicatedStorage"));
+local playersService = game:GetService("Players")
+local textService = game:GetService("TextService")
+local lightingService = game:GetService("Lighting")
+local textChatService = game:GetService("TextChatService")
+local inputService = game:GetService("UserInputService")
+local runService = game:GetService("RunService")
+local tweenService = game:GetService("TweenService")
+local collectionService = game:GetService("CollectionService")
+local replicatedStorage = game:GetService("ReplicatedStorage")
 local gameCamera = workspace.CurrentCamera;
 local lplr = playersService.LocalPlayer;
 local vapeConnections = {};
@@ -79,7 +78,7 @@ local isfile = isfile or function(file)
 end
 -- Xylex's isn
 local networkownerswitch = tick()
-if getgenv().isnetworkowner = nil then
+if getgenv().isnetworkowner == nil then
 	local isnetworkowner = function(part)
 		local suc, res = pcall(function() return gethiddenproperty(part, "NetworkOwnershipRule") end)
 		if suc and res == Enum.NetworkOwnership.Manual then
@@ -92,7 +91,7 @@ end
 
 local getcustomasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
 local queueonteleport = syn and syn.queue_on_teleport or queue_on_teleport or function() end
-local synapsev3 = syn and "V3" or ""
+local synapsev3 = syn and syn.toast_notification and "V3" or ""
 local worldtoscreenpoint = function(pos)
 	if synapsev3 == "V3" then
 		local scr = worldtoscreen({pos})
@@ -166,9 +165,7 @@ end
 
 local function run(func)
 	local ab, ac = pcall(func)
-	if not ab then
-		error('Run (Error) - ' .. ab .. ' (a module didnt load.)')
-	end 
+	warningNotification('run, idk', ({ac})[2])
 end
 
 local function isFriend(plr, recolor)
@@ -9156,33 +9153,90 @@ task.spawn(function()
 end)
 
 run(function()
-	local DeathSound = {Enabled = false}
-
-
-	
-	table.insert(AutoLeave.Connections, vapeEvents.EntityDeathEvent.Event:Connect(function(deathTable)
-		if (not leaveAttempted) and deathTable.finalKill and deathTable.entityInstance == lplr.Character then
-			leaveAttempted = true
-			if isEveryoneDead() and store.matchState ~= 2 then
-				task.wait(1 + (AutoLeaveDelay.Value / 10))
-				if bedwars.ClientStoreHandler:getState().Game.customMatch == nil and bedwars.ClientStoreHandler:getState().Party.leader.userId == lplr.UserId then
-					if not AutoPlayAgain.Enabled then
-						bedwars.Client:Get("TeleportToLobby"):SendToServer()
-					else
-						if AutoLeaveRandom.Enabled then
-							local listofmodes = {}
-							for i,v in pairs(bedwars.QueueMeta) do
-								if not v.disabled and not v.voiceChatOnly and not v.rankCategory then table.insert(listofmodes, i) end
+	local KillMisc = {Enabled = false};
+	local finalkilll = {Enabled = false};
+	local notifyy = {Enabled = false};
+	local sounds = {
+		Click = {
+			Sound = 'rbxassetid://140910211'
+		}
+	};
+	local soundchoice = {Value = "Click"};
+	KillMisc = outerware.create.custom({
+		Name = "KillMisc",
+		Function = function(call)
+			if call then
+				task.spawn(function()
+					repeat
+						if not finalkilll.Enabled and not notifyy.Enabled then
+							warningNotification('KillMisc', 'Please enable an option.');
+							KillMisc.ToggleButton(true);
+						end;
+						task.wait();
+					until (not KillMisc.Enabled);
+				end)
+				local suc, res = pcall(function()
+					vapeEvents.EntityDeathEvent.Event:Connect(function(deathtable)
+						if not KillMisc.Enabled then return end
+						if lplr == nil then return end
+						local killer = playersService:GetPlayerFromCharacter(deathtable.fromEntity) or nil;
+						local killed = playersService:GetPlayerFromCharacter(deathtable.entityInstance) or nil;
+						if killer == nil or killed == nil then return end;
+						if killed == lplr or killer ~= lplr then return end;
+						if deathtable.finalKill and finalkilll.Enabled then
+							if notifyy.Enabled then
+								warningNotification('OuterWare', 'You final killed ' .. killed.Name .. '!', 5);
+							end;
+							local placeg = Instance.new('Sound')
+							for i,v in next, sounds do
+								if i == soundchoice.Value then
+									placeg.Parent = workspace
+									placeg.SoundId = v.Sound
+									placeg:Play()
+								end
 							end
-							bedwars.QueueController:joinQueue(listofmodes[math.random(1, #listofmodes)])
-						else
-							bedwars.QueueController:joinQueue(store.queueType)
+						end;
+						if not deathtable.finalKill then
+							if notifyy.Enabled then
+								infoNotification('OuterWare', 'You killed ' .. killed.Name .. '!', 5);
+							end;
+							local placeg = Instance.new('Sound')
+							for i,v in next, sounds do
+								if i == soundchoice.Value then
+									placeg.Parent = workspace
+									placeg.SoundId = v.Sound
+									placeg:Play()
+								end
+							end
 						end
-					end
+					end);
+				end)
+				if not suc then
+					warningNotification('KillMisc', 'Error: '..res, 10)
+					KillMisc.ToggleButton(true);
 				end
-			end
-		end
-	end))
+			end;
+		end,
+		HoverText = "antiban type shi"
+	});
+	finalkilll = KillMisc.CreateToggle({
+		Name = "Final Kill",
+		Function = function() end,
+		Default = true
+	});
+	notifyy = KillMisc.CreateToggle({
+		Name = "Notify",
+		Function = function() end,
+		Default = true
+	});
+	local soundtable = {}
+	for i,v in next, sounds do table.insert(soundtable, i) end
+	soundchoice = antiban.CreateDropdown({
+		Name = "Method",
+		List = soundtable,
+		Function = function(val) end
+	})
 end)
 
-infoNotification('OuterWare', 'Loaded in ' .. math.round(tick() - xdg) .. 's.', 5)
+
+infoNotification('OuterWare', 'Loaded in ' .. math.round(tick() - xdg) .. 's.', 5);
