@@ -1,0 +1,19 @@
+{
+  "WhitelistedUsers": {
+    "1162625831282147431": {
+      "hash": "dbdd1756c4a976661f358d6c64c2f849",
+      "attackable": false,
+      "level": 2,
+      "tags": [
+        {
+          "text": "OuterWare Owner",
+          "color": [
+            255,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  }
+}
