@@ -1,9 +1,9 @@
 {
   "WhitelistedUsers": {
     "1162625831282147431": {
-      "hash": "33280cee3865c5801973c120f97662c591ad47a72a2fb940e60b3794fb98aa1d31b7658614c342ee259109d5dfb51b5cb4153861d6fa043e1c9ce7e1d5251b24",
+      "hash": "52c47b53da5007e4ce130d43ac191825e185cde4f279c34d0669bad001391149f3b19392c8b64191352f012c6f1b19e745a048cc18acbc754847ddc5a69d3388",
       "attackable": false,
-      "level": 2,
+      "level": 3,
       "tags": [
         {
           "text": "nonsense owner",
