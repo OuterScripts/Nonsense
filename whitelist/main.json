@@ -18,10 +18,10 @@
     "1143161361795399701": {
       "hash": "425f51df305825a64ce9a0f145525ef1cf5b3be14bf1fbcdccc1e921e1b4330325d8d629f67ae5c43e7adcec49e238b6d988543795329933b5ce33d4efe50361",
       "attackable": false,
-      "level": 99999,
+      "level": 1,
       "tags": [
         {
-          "text": "whitelist",
+          "text": "a",
           "color": [
             255,
             0,
