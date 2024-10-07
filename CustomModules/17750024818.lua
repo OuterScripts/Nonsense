@@ -1,9 +1,10 @@
 -- bedwarz
 local GuiLibrary = shared.outerware.lib;
-local players = game:GetService("Players");
+local starterPlayerService = game:GetService("StarterPlayer")
+local playersService = game:GetService("Players");
 local textservice = game:GetService("TextService");
-local repstorage = game:GetService("ReplicatedStorage");
-local lplr = players.LocalPlayer
+local replicatedStorageService = game:GetService("ReplicatedStorage");
+local lplr = playersService.LocalPlayer
 local workspace = game:GetService("Workspace");
 local lighting = game:GetService("Lighting");
 local textchatservice = game:GetService("TextChatService");
@@ -40,14 +41,13 @@ end
 GuiLibrary.RemoveObject("ClientKickDisablerOptionsButton")
 run(function()
 	local nofall = {Enabled = false}
-    local falll = game:GetService("StarterPlayer").StarterCharacterScripts.FallDamage
 	nofall = outerware.create.custom({
 		Name = "NoFall",
 		Function = function(callback)
 			if callback then
                 repeat
-                    if falll then
-                        falll:Destroy()
+                    if starterPlayerService.StarterCharacterScripts.FallDamage then
+                        starterPlayerService.StarterCharacterScripts.FallDamage
                     end
 					task.wait()
                 until (not nofall.Enabled)
@@ -57,9 +57,9 @@ run(function()
 	})
 end)
 
-run(function()
+--[[run(function()
 	local AntiRecover = {Enabled = false}
-    local pathh = repstorage.Remotes.CheckAnticheat
+    local pathh = replicatedStorageService.Remotes.CheckAnticheat
 	AntiRecover = outerware.create.custom({
 		Name = "AntiRecover",
 		Function = function(callback)
@@ -79,7 +79,7 @@ end)
 
 run(function()
 	local Disabler = {Enabled = false}
-    local ac = game:GetService("StarterPlayer").StarterCharacterScripts.Anticheat
+    local ac = starterPlayerService.StarterCharacterScripts.Anticheat
 	Disabler = outerware.create.custom({
 		Name = "Disabler",
 		Function = function(callback)
@@ -97,11 +97,11 @@ run(function()
 		end,
 		HoverText = "disabler moment"
 	})
-end)
+end)]]
 
 run(function()
 	local InfiniteAura = {Enabled = false}
-    local attackmoment = repstorage.Remotes.ItemRemotes.SwordAttack2
+    local attackmoment = replicatedStorageService.Remotes.ItemRemotes.SwordAttack2
 	local oldpos
     local getsword = function()
         local gear = lplr.StarterGear
@@ -122,7 +122,7 @@ run(function()
                 end
 				oldpos = vapeentity.character.HumanoidRootPart.CFrame
                 repeat
-                    for i,v in players:GetPlayers() do
+                    for i,v in playersService:GetPlayers() do
 						if v ~= lplr then
 							vapeentity.character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame + Vector3.new(0, 8, 0)
 							if issword() then
