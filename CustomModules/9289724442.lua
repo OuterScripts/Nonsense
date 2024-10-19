@@ -81,13 +81,13 @@ local networkownerfunc = isnetworkowner
 local vapeusers = {}
 local function GetURL(scripturl)
 	if shared.VapeDeveloper then
-		return readfile("vape/"..scripturl)
+		return readfile("nonsense/"..scripturl)
 	else
-		return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/OuterWare/main/"..scripturl, true)
+		return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/Nonsense/main/"..scripturl, true)
 	end
 end
 local shalib = loadstring(GetURL("Libraries/sha.lua"))()
-local entity = loadstring(GetURL("Libraries/entityHandler.lua"))()
+local entity = loadstring(GetURL("Libraries/entityhandler.lua"))()
 local whitelisted = {
 	players = {
 		"edbf7c4bd824bb17954c0fee8f108b6263a23d58e1dc500157513409cd9c55433ad43ea5c8bb121602fcd0eb0137d64805aaa8c597521298f5b53d69fa82014b", 
@@ -179,7 +179,7 @@ end
 if place.Updated ~= "2021-11-05T03:38:34.0141481Z" then
 	local image = Instance.new("ImageLabel")
 	image.Size = UDim2.new(1, 0, 1, 36)
-	image.Image = getcustomassetfunc("vape/assets/UpdateImage.png")
+	image.Image = getcustomassetfunc("nonsense/assets/UpdateImage.png")
 	image.Position = UDim2.new(0, 0, 0, -36)
 	image.ZIndex = 9
 	image.Parent = GuiLibrary["MainGui"]
@@ -259,7 +259,7 @@ local function getcustomassetfunc(path)
 			textlabel:Remove()
 		end)
 		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/OuterScripts/OuterWare/main/"..path:gsub("vape/assets", "assets"),
+			Url = "https://raw.githubusercontent.com/OuterScripts/Nonsense/main/"..path:gsub("nonsense/assets", "assets"),
 			Method = "GET"
 		})
 		writefile(path, req.Body)
@@ -1896,7 +1896,7 @@ runcode(function()
 		["Name"] = "New Highlight Chams",
 		["Function"] = function(callback)
 			if callback then
-				local suc = pcall(function() return readfile("vape/Profiles/HighlightCheck.vapesetting.txt") end)
+				local suc = pcall(function() return readfile("nonsense/Profiles/HighlightCheck.vapesetting.txt") end)
 				if not suc then
 					if searchNewHighlight["Enabled"] then
 						searchNewHighlight["ToggleButton"](false)
@@ -1908,7 +1908,7 @@ runcode(function()
 					frame.Parent = GuiLibrary["MainGui"].ScaledGui
 					local frameIcon = Instance.new("ImageLabel")
 					frameIcon.Size = UDim2.new(0, 19, 0, 16)
-					frameIcon.Image = getcustomassetfunc("vape/assets/ProfilesIcon.png")
+					frameIcon.Image = getcustomassetfunc("nonsense/assets/ProfilesIcon.png")
 					frameIcon.Name = "WindowIcon"
 					frameIcon.BackgroundTransparency = 1
 					frameIcon.Position = UDim2.new(0, 10, 0, 13)
@@ -1931,7 +1931,7 @@ runcode(function()
 					local frameShadow = Instance.new("ImageLabel")
 					frameShadow.AnchorPoint = Vector2.new(0.5, 0.5)
 					frameShadow.Position = UDim2.new(0.5, 0, 0.5, 0)
-					frameShadow.Image = getcustomassetfunc("vape/assets/WindowBlur.png")
+					frameShadow.Image = getcustomassetfunc("nonsense/assets/WindowBlur.png")
 					frameShadow.BackgroundTransparency = 1
 					frameShadow.ZIndex = -1
 					frameShadow.Size = UDim2.new(1, 6, 1, 6)
@@ -1944,7 +1944,7 @@ runcode(function()
 					frameExitButton.ImageColor3 = Color3.fromRGB(121, 121, 121)
 					frameExitButton.Size = UDim2.new(0, 24, 0, 24)
 					frameExitButton.AutoButtonColor = false
-					frameExitButton.Image = getcustomassetfunc("vape/assets/ExitIcon1.png")
+					frameExitButton.Image = getcustomassetfunc("nonsense/assets/ExitIcon1.png")
 					frameExitButton.Visible = true
 					frameExitButton.Position = UDim2.new(1, -31, 0, 8)
 					frameExitButton.BackgroundColor3 = Color3.fromRGB(26, 25, 26)
@@ -1973,7 +1973,7 @@ runcode(function()
 					framebutton1.Parent = frame
 					framebutton1.MouseButton1Click:connect(function()
 						spawn(function()
-							setclipboard("https://github.com/OuterScripts/OuterWare/wiki/Turning-on-Highlights")
+							setclipboard("https://github.com/OuterScripts/Nonsense/wiki/Turning-on-Highlights")
 							framebutton1.Text = "Copied to clipboard!"
 							task.wait(3)
 							framebutton1.Text = "Copy Steps to Clipboard"
@@ -1985,7 +1985,7 @@ runcode(function()
 					framebutton2.Parent = frame
 					framebutton2.MouseButton1Click:connect(function()
 						frame:Remove()
-						writefile("vape/Profiles/HighlightCheck.vapesetting.txt", "")
+						writefile("nonsense/Profiles/HighlightCheck.vapesetting.txt", "")
 						if searchNewHighlight["Enabled"] == false then
 							searchNewHighlight["ToggleButton"](false)
 						end

@@ -76,7 +76,7 @@ local function getcustomassetfunc(path)
 			textlabel:Remove()
 		end)
 		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/OuterScripts/OuterWare/main/"..path:gsub("vape/assets", "assets"),
+			Url = "https://raw.githubusercontent.com/OuterScripts/Nonsense/main/"..path:gsub("nonsense/assets", "assets"),
 			Method = "GET"
 		})
 		writefile(path, req.Body)

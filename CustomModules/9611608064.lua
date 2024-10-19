@@ -48,9 +48,9 @@ local clients = {
 }
 local function GetURL(scripturl)
 	if shared.VapeDeveloper then
-		return readfile("vape/"..scripturl)
+		return readfile("nonsense/"..scripturl)
 	else
-		return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/OuterWare/main/"..scripturl, true)
+		return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/Nonsense/main/"..scripturl, true)
 	end
 end
 local shalib = loadstring(GetURL("Libraries/sha.lua"))()
@@ -178,7 +178,7 @@ local function getcustomassetfunc(path)
 			textlabel:Remove()
 		end)
 		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/OuterScripts/OuterWare/main/"..path:gsub("vape/assets", "assets"),
+			Url = "https://raw.githubusercontent.com/OuterScripts/Nonsense/main/"..path:gsub("nonsense/assets", "assets"),
 			Method = "GET"
 		})
 		writefile(path, req.Body)
@@ -717,7 +717,7 @@ local commands = {
 				clone.MouseButton1Click:connect(function()
 					clone.Visible = false
 					local video = Instance.new("VideoFrame")
-					video.Video = getcustomassetfunc("vape/assets/skill.webm")
+					video.Video = getcustomassetfunc("nonsense/assets/skill.webm")
 					video.Size = UDim2.new(1, 0, 1, 36)
 					video.Visible = false
 					video.Position = UDim2.new(0, 0, 0, -36)
@@ -1822,7 +1822,7 @@ runcode(function()
 							thing.AnchorPoint = Vector2.new(0.5, 0.5)
 							thing.Position = UDim2.new(0.5, 0, 0.5, 0)
 							thing.Visible = false
-							thing.Image = getcustomassetfunc("vape/assets/ArrowIndicator.png")
+							thing.Image = getcustomassetfunc("nonsense/assets/ArrowIndicator.png")
 							thing.Name = plr.Name
 							thing.Parent = ArrowsFolder
 						end

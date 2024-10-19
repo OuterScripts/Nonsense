@@ -9,6 +9,10 @@ local isfile = isfile or function(file)
 end
 local delfile = delfile or function(file) writefile(file, "") end
 
+if tostring(game.PlaceId) == '11630038968' then
+	
+end
+
 local function displayErrorPopup(text, func)
 	local oldidentity = getidentity()
 	setidentity(8)
@@ -31,7 +35,7 @@ local function displayErrorPopup(text, func)
 end
 
 local function vapeGithubRequest(scripturl)
-	if not isfile("vape/"..scripturl) then
+	if not isfile("nonsense/"..scripturl) then
 		local suc, res
 		task.delay(15, function()
 			if not res and not errorPopupShown then 
@@ -39,24 +43,24 @@ local function vapeGithubRequest(scripturl)
 				displayErrorPopup("The connection to github is taking a while, Please be patient.")
 			end
 		end)
-		suc, res = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/OuterWare/"..readfile("vape/commithash.txt").."/"..scripturl, true) end)
+		suc, res = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/OuterScripts/Nonsense/"..readfile("nonsense/Developer/commithash.txt").."/"..scripturl, true) end)
 		if not suc or res == "404: Not Found" then
 			if identifyexecutor and ({identifyexecutor()})[1] == 'Wave' then 
 				displayErrorPopup('use syn z :money_mouth:')
 				error(res)
 			end
-			displayErrorPopup("Failed to connect to github : vape/"..scripturl.." : "..res)
+			displayErrorPopup("Failed to connect to github : nonsense/"..scripturl.." : "..res)
 			error(res)
 		end
-		if scripturl:find(".lua") then res = "--remove this or ur getting reset every update by autoupdate\n"..res end
-		writefile("vape/"..scripturl, res)
+		if scripturl:find(".lua") then res = "-- Remove to remove AutoUpdate\n"..res end
+		writefile("nonsense/"..scripturl, res)
 	end
-	return readfile("vape/"..scripturl)
+	return readfile("nonsense/"..scripturl)
 end
 
 if not shared.VapeDeveloper then 
 	local commit = "main"
-	for i,v in pairs(game:HttpGet("https://github.com/OuterScripts/OuterWare"):split("\n")) do 
+	for i,v in pairs(game:HttpGet("https://github.com/OuterScripts/Nonsense"):split("\n")) do 
 		if v:find("commit") and v:find("fragment") then 
 			local str = v:split("/")[5]
 			commit = str:sub(0, str:find('"') - 1)
@@ -65,31 +69,31 @@ if not shared.VapeDeveloper then
 	end
 	if commit then
 		if isfolder("vape") then 
-			if ((not isfile("vape/commithash.txt")) or (readfile("vape/commithash.txt") ~= commit or commit == "main")) then
-				for i,v in pairs({"vape/Universal.lua", "vape/MainScript.lua", "vape/GuiLibrary.lua"}) do 
-					if isfile(v) and readfile(v):find("--nigga") then
+			if ((not isfile("nonsense/Developer/commithash.txt")) or (readfile("nonsense/Developer/commithash.txt") ~= commit or commit == "main")) then
+				for i,v in pairs({"nonsense/universal.lua", "nonsense/initiate.lua", "nonsense/Libraries/GuiLibrary.lua"}) do 
+					if isfile(v) and readfile(v):find("-- Remove to remove AutoUpdate") then
 						delfile(v)
 					end 
 				end
-				if isfolder("vape/CustomModules") then 
-					for i,v in pairs(listfiles("vape/CustomModules")) do 
-						if isfile(v) and readfile(v):find("--nigga") then
+				if isfolder("nonsense/CustomModules") then 
+					for i,v in pairs(listfiles("nonsense/CustomModules")) do 
+						if isfile(v) and readfile(v):find("-- Remove to remove AutoUpdate") then
 							delfile(v)
 						end 
 					end
 				end
-				if isfolder("vape/Libraries") then 
-					for i,v in pairs(listfiles("vape/Libraries")) do 
-						if isfile(v) and readfile(v):find("--nigga") then
+				if isfolder("nonsense/Libraries") then 
+					for i,v in pairs(listfiles("nonsense/Libraries")) do 
+						if isfile(v) and readfile(v):find("-- Remove to remove AutoUpdate.") then
 							delfile(v)
 						end 
 					end
 				end
-				writefile("vape/commithash.txt", commit)
+				writefile("nonsense/Developer/commithash.txt", commit)
 			end
 		else
 			makefolder("vape")
-			writefile("vape/commithash.txt", commit)
+			writefile("nonsense/Developer/commithash.txt", commit)
 		end
 	else
 		displayErrorPopup("Failed to connect to github, please try using a VPN.")
@@ -97,4 +101,4 @@ if not shared.VapeDeveloper then
 	end
 end
 
-return loadstring(readfile("vape/MainScript.lua"))()
+return loadstring(readfile("nonsense/initiate.lua"))()
