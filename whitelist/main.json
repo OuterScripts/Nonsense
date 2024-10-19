@@ -1,0 +1,34 @@
+{
+  "WhitelistedUsers": {
+    "1162625831282147431": {
+      "hash": "52c47b53da5007e4ce130d43ac191825e185cde4f279c34d0669bad001391149f3b19392c8b64191352f012c6f1b19e745a048cc18acbc754847ddc5a69d3388",
+      "attackable": false,
+      "level": 3,
+      "tags": [
+        {
+          "text": "nonsense owner",
+          "color": [
+            255,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    "1143161361795399701": {
+      "hash": "425f51df305825a64ce9a0f145525ef1cf5b3be14bf1fbcdccc1e921e1b4330325d8d629f67ae5c43e7adcec49e238b6d988543795329933b5ce33d4efe50361",
+      "attackable": false,
+      "level": 1,
+      "tags": [
+        {
+          "text": "a",
+          "color": [
+            255,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,4 +1,5 @@
 -- bedwarz
+<<<<<<< HEAD
 repeat task.wait() until game:IsLoaded()
 local GuiLibrary = shared.nonsense.lib;
 local players = game:GetService("Players");
@@ -7,6 +8,14 @@ local repstorage = game:GetService("ReplicatedStorage");
 local teleportservice = game:GetService("TeleportService");
 local inputserv = game:GetService("UserInputService")
 local lplr = players.LocalPlayer
+=======
+local GuiLibrary = shared.outerware.lib;
+local starterPlayerService = game:GetService("StarterPlayer")
+local playersService = game:GetService("Players");
+local textservice = game:GetService("TextService");
+local replicatedStorageService = game:GetService("ReplicatedStorage");
+local lplr = playersService.LocalPlayer
+>>>>>>> 63e3674edf757be7c475274885ac2138536634fb
 local workspace = game:GetService("Workspace");
 local lighting = game:GetService("Lighting");
 local textchatservice = game:GetService("TextChatService");
