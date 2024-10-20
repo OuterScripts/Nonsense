@@ -6778,8 +6778,9 @@ run(function()
 							itemType = shopitem.itemType
 						})
 						task.spawn(function()
-							if AutoBuyItemm.Value == "Scythe" and getitem("scythe", inv.items) then
+							if AutoBuyItemm.Value == "Scythe" and not buyingthing and shopitem == getShopItem('wood_scythe') or  then
 								task.wait(11)
+								buyingthing = true
 								store.ihatebedwars = false
 							end
 						end)
