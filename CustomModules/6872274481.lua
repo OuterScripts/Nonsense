@@ -6778,7 +6778,7 @@ run(function()
 							itemType = shopitem.itemType
 						})
 						task.spawn(function()
-							if AutoBuyItemm.Value == "Scythe" and getitem("scythe",) then
+							if AutoBuyItemm.Value == "Scythe" and getitem("scythe", inv.items) then
 								task.wait(11)
 								store.ihatebedwars = false
 							end
@@ -8807,7 +8807,6 @@ run(function()
 	})
 end)
 
---[[
 run(function()
 	local Disabler: vapemod = {Enabled = false};
 	local directiondropdown: table = {Value = "LookVector"};
@@ -8876,7 +8875,6 @@ run(function()
         Function = function() end
     });
 end)
-]]
 
 run(function()
     local KaidaInstaKill: vapemod = {Enabled = false}
@@ -8896,21 +8894,18 @@ run(function()
                         return (check1.Position - entityLibrary.character.HumanoidRootPart.Position).Magnitude < (check2.Position - entityLibrary.character.HumanoidRootPart.Position).Magnitude
                     end
                 }
-                local sendreq = function(entity)
-                    local args = {
-                        [1] = {
-                            ["clientTime"] = tick(),
-                            ["direction"] = (entity.HumanoidRootPart.Position - lplr.Character.HumanoidRootPart.Position).unit,
-                            ["position"] = entity.HumanoidRootPart.Position
-                        }
-                    }
-                    return replicatedStorage.rbxts_include.node_modules:FindFirstChild("@rbxts").net.out._NetManaged.SummonerClawAttackRequest:FireServer(unpack(args))
-                end
                 repeat task.wait();
                     if entityLibrary.isAlive and store.matchState > 0 then
                         local res = AllNearPosition(Range.Value, MaxEntities.Value, npcsortmethods["Distance"], nil, true)
                         for i,v in pairs(res) do
-                            local response = sendreq(v)
+							local args = {
+								[1] = {
+									["clientTime"] = tick(),
+									["direction"] = (v.HumanoidRootPart.Position - lplr.Character.HumanoidRootPart.Position).unit,
+									["position"] = v.HumanoidRootPart.Position
+								}
+							}
+							replicatedStorage.rbxts_include.node_modules:FindFirstChild("@rbxts").net.out._NetManaged.SummonerClawAttackRequest:FireServer(unpack(args))
                         end
                     end
                 until (not KaidaInstaKill.Enabled)
