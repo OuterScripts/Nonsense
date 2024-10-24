@@ -206,6 +206,7 @@ run(function()
     })
 end)
 
+--[[anticheats you now
 run(function()
 	local creditstealer = {Enabled = false};
 	local remote = repstorage.Remotes:FindFirstChild('GiveTag') or nil
@@ -229,4 +230,4 @@ run(function()
 		end,
 		HoverText = "thats my credit moment"
 	})
-end)
+end)]]
